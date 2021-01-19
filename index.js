@@ -107,10 +107,13 @@ module.exports = Notification;
 function encodeNativeNotification(attributes) {
     if (typeof attributes === 'string') attributes = JSON.parse(attributes);
     // Set defaults
-    if (!attributes.smallIcon) attributes.smallIcon = 'ic_launcher';
+    if (!attributes.smallIcon) attributes.smallIcon = 'ic_launcher_foreground';
     if (!attributes.id) attributes.id = parseInt(Math.random() * 100000);
     if (!attributes.action) attributes.action = 'DEFAULT';
     if (!attributes.payload) attributes.payload = {};
+    if (!attributes.channelId) attributes.channelId = "default-channel";
+    if (!attributes.channelName) attributes.channelName = "default-channel";
+    if (!attributes.channelDescription) attributes.channelDescription = "default-channel";
     if (attributes.autoClear === undefined) attributes.autoClear = true;
     if (attributes.tickerText === undefined) {
         if (attributes.subject) {

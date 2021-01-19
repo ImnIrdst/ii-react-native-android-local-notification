@@ -1,17 +1,14 @@
 package com.imnirdst.iireactnativeandroidlocalnotification;
 
-import android.content.ComponentName;
-import android.os.Build;
-import android.os.Bundle;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningAppProcessInfo;
-import android.content.Intent;
-import android.content.Context;
 import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 
 import java.util.List;
-
-import android.util.Log;
 
 /**
  * Handles user's interaction on notifications.
@@ -26,7 +23,8 @@ public class NotificationEventReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Bundle extras = intent.getExtras();
 
-        Log.i("ReactSystemNotification", "NotificationEventReceiver: Recived: " + extras.getString(ACTION)
+        assert extras != null;
+        Log.i("ReactSystemNotification", "NotificationEventReceiver: Received: " + extras.getString(ACTION)
                 + ", Notification ID: " + extras.getInt(NOTIFICATION_ID) + ", payload: " + extras.getString(PAYLOAD));
 
         // If the application is not running or is not in foreground, start it with the
@@ -36,6 +34,7 @@ public class NotificationEventReceiver extends BroadcastReceiver {
             String packageName = context.getApplicationContext().getPackageName();
             Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(packageName);
 
+            assert launchIntent != null;
             launchIntent.putExtra("initialSysNotificationId", extras.getInt(NOTIFICATION_ID));
             launchIntent.putExtra("initialSysNotificationAction", extras.getString(ACTION));
             launchIntent.putExtra("initialSysNotificationPayload", extras.getString(PAYLOAD));
@@ -44,18 +43,18 @@ public class NotificationEventReceiver extends BroadcastReceiver {
             context.startActivity(launchIntent);
             Log.i("ReactSystemNotification", "NotificationEventReceiver: Launching: " + packageName);
         } else {
-            sendBroadcast(context, extras); // If the application is already running in foreground, send a brodcast too
+            sendBroadcast(context, extras); // If the application is already running in foreground, send a broadcast too
         }
     }
 
     private void sendBroadcast(Context context, Bundle extras) {
-        Intent brodcastIntent = new Intent("NotificationEvent");
+        Intent broadcastIntent = new Intent("NotificationEvent");
 
-        brodcastIntent.putExtra("id", extras.getInt(NOTIFICATION_ID));
-        brodcastIntent.putExtra("action", extras.getString(ACTION));
-        brodcastIntent.putExtra("payload", extras.getString(PAYLOAD));
+        broadcastIntent.putExtra("id", extras.getInt(NOTIFICATION_ID));
+        broadcastIntent.putExtra("action", extras.getString(ACTION));
+        broadcastIntent.putExtra("payload", extras.getString(PAYLOAD));
 
-        context.sendBroadcast(brodcastIntent);
+        context.sendBroadcast(broadcastIntent);
         Log.v("ReactSystemNotification",
                 "NotificationEventReceiver: Broadcast Sent: NotificationEvent: " + extras.getString(ACTION)
                         + ", Notification ID: " + extras.getInt(NOTIFICATION_ID) + ", payload: "
@@ -65,23 +64,16 @@ public class NotificationEventReceiver extends BroadcastReceiver {
     private boolean applicationIsRunning(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT_WATCH) {
-            List<RunningAppProcessInfo> processInfos = activityManager.getRunningAppProcesses();
-            for (RunningAppProcessInfo processInfo : processInfos) {
-                if (processInfo.processName.equals(context.getApplicationContext().getPackageName())) {
-                    if (processInfo.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
-                        for (String d : processInfo.pkgList) {
-                            Log.v("ReactSystemNotification", "NotificationEventReceiver: ok: " + d);
-                            return true;
-                        }
+        assert activityManager != null;
+        List<RunningAppProcessInfo> processInfoList = activityManager.getRunningAppProcesses();
+        for (RunningAppProcessInfo processInfo : processInfoList) {
+            if (processInfo.processName.equals(context.getApplicationContext().getPackageName())) {
+                if (processInfo.importance == RunningAppProcessInfo.IMPORTANCE_FOREGROUND) {
+                    for (String d : processInfo.pkgList) {
+                        Log.v("ReactSystemNotification", "NotificationEventReceiver: ok: " + d);
+                        return true;
                     }
                 }
-            }
-        } else {
-            List<ActivityManager.RunningTaskInfo> taskInfo = activityManager.getRunningTasks(1);
-            ComponentName componentInfo = taskInfo.get(0).topActivity;
-            if (componentInfo.getPackageName().equals(context.getPackageName())) {
-                return true;
             }
         }
 

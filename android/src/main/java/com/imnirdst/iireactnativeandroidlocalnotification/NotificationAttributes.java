@@ -68,7 +68,6 @@ public class NotificationAttributes {
     public String group;
 
     public void loadFromReadableMap(ReadableMap readableMap) {
-        Log.d("imnimn Notification", readableMap.toString());
         if (readableMap.hasKey("id"))
             id = readableMap.getInt("id");
         if (readableMap.hasKey("subject"))

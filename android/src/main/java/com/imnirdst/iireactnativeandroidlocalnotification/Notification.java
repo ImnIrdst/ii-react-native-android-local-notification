@@ -11,7 +11,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import androidx.annotation.Nullable;
+
 import android.net.Uri;
 
 import java.lang.System;
@@ -20,20 +22,23 @@ import java.net.URL;
 import com.google.gson.Gson;
 
 import android.util.Base64;
+
 import androidx.core.app.NotificationCompat;
+
 import android.text.Html;
 import android.util.Log;
 import android.graphics.Color;
 
 /**
  * An object-oriented Wrapper class around the system notification class.
- *
+ * <p>
  * Each instance is an representation of a single, or a set of scheduled
  * notifications. It handles operations like showing, canceling and clearing.
  */
+@SuppressWarnings({"UnusedReturnValue", "unused", "RedundantSuppression"})
 public class Notification {
-    private Context context;
-    private int id;
+    private final Context context;
+    private final int id;
     private NotificationAttributes attributes;
 
     /**
@@ -119,9 +124,9 @@ public class Notification {
                 new NotificationCompat.Builder(context, attributes.channelId);
 
         notificationBuilder.setContentTitle(attributes.subject).setContentText(attributes.message)
-                .setSmallIcon(
-                        context.getResources().getIdentifier(attributes.smallIcon, "mipmap", context.getPackageName()))
-                .setAutoCancel(attributes.autoClear).setContentIntent(getContentIntent());
+                .setSmallIcon(context.getResources().getIdentifier(attributes.smallIcon, "drawable", context.getPackageName()))
+                .setAutoCancel(attributes.autoClear)
+                .setContentIntent(getContentIntent());
 
         if (attributes.priority != null) {
             notificationBuilder.setPriority(attributes.priority);
@@ -203,7 +208,7 @@ public class Notification {
                 Log.i("ReactSystemNotification", "finishing to get image from URL");
 
             } catch (Exception e) {
-                Log.e("ReactSystemNotification", "Error when getting image from URL" + e.getStackTrace());
+                Log.e("ReactSystemNotification", "Error when getting image from URL",e);
             }
 
             if (bigPicture != null) {
@@ -222,7 +227,7 @@ public class Notification {
                 Log.i("ReactSystemNotification", "finished to convert bigStyleImageBase64 to bitmap");
 
             } catch (Exception e) {
-                Log.e("ReactSystemNotification", "Error when converting base 64 to Bitmap" + e.getStackTrace());
+                Log.e("ReactSystemNotification", "Error when converting base 64 to Bitmap", e);
             }
 
             if (bigPicture != null) {
@@ -313,42 +318,42 @@ public class Notification {
 
         } else {
             switch (attributes.repeatType) {
-            case "time":
-                getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, attributes.repeatTime,
-                        pendingIntent);
-                Log.i("ReactSystemNotification", "Set " + attributes.repeatTime + "ms Alarm: " + id);
-                break;
+                case "time":
+                    getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, attributes.repeatTime,
+                            pendingIntent);
+                    Log.i("ReactSystemNotification", "Set " + attributes.repeatTime + "ms Alarm: " + id);
+                    break;
 
-            case "minute":
-                getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, 60000, pendingIntent);
-                Log.i("ReactSystemNotification", "Set Minute Alarm: " + id);
-                break;
+                case "minute":
+                    getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, 60000, pendingIntent);
+                    Log.i("ReactSystemNotification", "Set Minute Alarm: " + id);
+                    break;
 
-            case "hour":
-                getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, AlarmManager.INTERVAL_HOUR,
-                        pendingIntent);
-                Log.i("ReactSystemNotification", "Set Hour Alarm: " + id);
-                break;
+                case "hour":
+                    getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, AlarmManager.INTERVAL_HOUR,
+                            pendingIntent);
+                    Log.i("ReactSystemNotification", "Set Hour Alarm: " + id);
+                    break;
 
-            case "halfDay":
-                getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt,
-                        AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
-                Log.i("ReactSystemNotification", "Set Half-Day Alarm: " + id);
-                break;
+                case "halfDay":
+                    getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt,
+                            AlarmManager.INTERVAL_HALF_DAY, pendingIntent);
+                    Log.i("ReactSystemNotification", "Set Half-Day Alarm: " + id);
+                    break;
 
-            case "day":
-            case "week":
-            case "month":
-            case "year":
-                getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, AlarmManager.INTERVAL_DAY,
-                        pendingIntent);
-                Log.i("ReactSystemNotification", "Set Day Alarm: " + id + ", Type: " + attributes.repeatType);
-                break;
+                case "day":
+                case "week":
+                case "month":
+                case "year":
+                    getAlarmManager().setRepeating(AlarmManager.RTC_WAKEUP, attributes.sendAt, AlarmManager.INTERVAL_DAY,
+                            pendingIntent);
+                    Log.i("ReactSystemNotification", "Set Day Alarm: " + id + ", Type: " + attributes.repeatType);
+                    break;
 
-            default:
-                getAlarmManager().set(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
-                Log.i("ReactSystemNotification", "Set One-Time Alarm: " + id);
-                break;
+                default:
+                    getAlarmManager().set(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
+                    Log.i("ReactSystemNotification", "Set One-Time Alarm: " + id);
+                    break;
             }
         }
 
@@ -374,19 +379,14 @@ public class Notification {
 
         editor.putString(Integer.toString(id), attributesJSONString);
 
-        if (Build.VERSION.SDK_INT < 9) {
-            editor.commit();
-        } else {
-            editor.apply();
-        }
+        editor.apply();
 
         Log.i("ReactSystemNotification", "Notification Saved To Pref: " + id + ": " + attributesJSONString);
     }
 
     public void loadAttributesFromPreferences() {
         String attributesJSONString = getSharedPreferences().getString(Integer.toString(id), null);
-        this.attributes = (NotificationAttributes) new Gson().fromJson(attributesJSONString,
-                NotificationAttributes.class);
+        this.attributes = new Gson().fromJson(attributesJSONString, NotificationAttributes.class);
 
         Log.i("ReactSystemNotification", "Notification Loaded From Pref: " + id + ": " + attributesJSONString);
     }
@@ -396,11 +396,7 @@ public class Notification {
 
         editor.remove(Integer.toString(id));
 
-        if (Build.VERSION.SDK_INT < 9) {
-            editor.commit();
-        } else {
-            editor.apply();
-        }
+        editor.apply();
 
         Log.i("ReactSystemNotification", "Notification Deleted From Pref: " + id);
     }
@@ -436,7 +432,6 @@ public class Notification {
 
     private void createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            Log.d("imnimn Notification", attributes.toString());
             CharSequence name = attributes.channelName;
             String description = attributes.channelDescription;
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
