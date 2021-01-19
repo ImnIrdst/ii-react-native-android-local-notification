@@ -1,4 +1,4 @@
-package com.staltz.reactnativeandroidlocalnotification;
+package com.imnirdst.iireactnativeandroidlocalnotification;
 
 import android.os.Bundle;
 import android.content.Context;

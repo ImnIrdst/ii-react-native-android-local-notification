@@ -1,4 +1,4 @@
-package com.staltz.reactnativeandroidlocalnotification;
+package com.imnirdst.iireactnativeandroidlocalnotification;
 
 import com.facebook.react.ReactPackage;
 import com.facebook.react.bridge.JavaScriptModule;

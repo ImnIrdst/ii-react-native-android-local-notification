@@ -1,6 +1,6 @@
 {
-  "name": "react-native-android-local-notification",
-  "version": "3.0.0",
+  "name": "ii-react-native-android-local-notification",
+  "version": "4.0.0",
   "description": "Local-only notifications for React Native Android projects",
   "main": "index.js",
   "files": [
@@ -10,7 +10,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/staltz/react-native-android-local-notification.git"
+    "url": "git+https://github.com/imnirdst/ii-react-native-android-local-notification.git"
   },
   "nativePackage": true,
   "keywords": [
@@ -21,11 +21,12 @@
   ],
   "author": "Layman <anysome@gmail.com>",
   "contributors": [
-    "Andre Staltz <contact@staltz.com>"
+    "Andre Staltz <contact@staltz.com>",
+    "Iman Irandoost <imnirdst@gmail.com>"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/staltz/react-native-android-local-notification/issues"
+    "url": "https://github.com/imnirdst/ii-react-native-android-local-notification/issues"
   },
-  "homepage": "https://github.com/staltz/react-native-android-local-notification#readme"
+  "homepage": "https://github.com/imnirdst/ii-react-native-android-local-notification#readme"
 }

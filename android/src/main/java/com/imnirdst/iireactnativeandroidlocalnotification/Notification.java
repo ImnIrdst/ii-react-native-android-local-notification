@@ -1,4 +1,4 @@
-package com.staltz.reactnativeandroidlocalnotification;
+package com.imnirdst.iireactnativeandroidlocalnotification;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

@@ -1,6 +1,6 @@
 # Local Android Notifications
 
-Forked from [https://github.com/anysome/react-native-pure-notification](https://github.com/anysome/react-native-pure-notification) to update its dependencies.
+Forked from [https://github.com/staltz/react-native-android-local-notification](https://github.com/staltz/react-native-android-local-notification) to support API above 26 (Notification channels).
 
 ---
 
@@ -48,15 +48,14 @@ Notification.create({
 ## Installation
 
 - For React Native 0.60 or higher, use this package's version 3.0.0 or higher
+    - Run `yarn add react-native-android-local-notification` to install using yarn.
 - For React Native 0.59 or lower, use this package's version 2.0.0 or lower
-
-- Run `npm install react-native-android-local-notification --save` to install using npm.
-
+    - Run `npm install react-native-android-local-notification --save` to install using npm.
 - Add the following two lines to `android/settings.gradle`:
 
 ```gradle
-include ':react-native-android-local-notification'
-project(':react-native-android-local-notification').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-android-local-notification/android')
+include ':ii-react-native-android-local-notification'
+project(':ii-react-native-android-local-notification').projectDir = new File(rootProject.projectDir, '../node_modules/ii-react-native-android-local-notification/android')
 ```
 
 - Edit `android/app/build.gradle` and add the annoated lines as below:
@@ -91,11 +90,11 @@ dependencies {
 ...
 
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
-      <receiver android:name="com.staltz.reactnativeandroidlocalnotification.NotificationEventReceiver" />   <!-- <- Add this line -->
-      <receiver android:name="com.staltz.reactnativeandroidlocalnotification.NotificationPublisher" />       <!-- <- Add this line -->
-      <receiver android:name="com.staltz.reactnativeandroidlocalnotification.SystemBootEventReceiver">       <!-- <- Add this line -->
+      <receiver android:name="com.imnirdst.iireactnativeandroidlocalnotification.NotificationEventReceiver" />   <!-- <- Add this line -->
+      <receiver android:name="com.imnirdst.iireactnativeandroidlocalnotification.NotificationPublisher" />       <!-- <- Add this line -->
+      <receiver android:name="com.imnirdst.iireactnativeandroidlocalnotification.SystemBootEventReceiver">       <!-- <- Add this line -->
         <intent-filter>                                                                   <!-- <- Add this line -->
-          <action android:name="android.intent.action.BOOT_COMPLETED"></action>           <!-- <- Add this line -->
+          <action android:name="android.intent.action.BOOT_COMPLETED"/>           <!-- <- Add this line -->
         </intent-filter>                                                                  <!-- <- Add this line -->
       </receiver>                                                                         <!-- <- Add this line -->
     </application>
@@ -118,7 +117,7 @@ import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 
-import com.staltz.reactnativeandroidlocalnotification.NotificationPackage;    // <- Add this line
+import com.imnirdst.iireactnativeandroidlocalnotification.NotificationPackage;    // <- Add this line
 
 public class MainApplication extends Application implements ReactApplication {
 

@@ -1,4 +1,4 @@
-package com.staltz.reactnativeandroidlocalnotification;
+package com.imnirdst.iireactnativeandroidlocalnotification;
 
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;

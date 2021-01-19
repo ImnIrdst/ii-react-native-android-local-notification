@@ -7,3 +7,5 @@ build/
 /captures
 .externalNativeBuild
 /android/.settings/
+/yarn.lock
+/node_modules/
