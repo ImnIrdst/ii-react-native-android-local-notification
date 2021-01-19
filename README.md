@@ -6,7 +6,7 @@ Forked from [https://github.com/staltz/react-native-android-local-notification](
 
 ```js
 import React, { DeviceEventEmitter } from 'react-native';
-import Notification from 'react-native-android-local-notification';
+import Notification from 'ii-react-native-android-local-notification';
 
 // Send a simple notification
 Notification.create({ subject: 'Hey', message: 'Yo! Hello world.' });
@@ -20,7 +20,10 @@ Notification.addListener('press', function(e) {
 Notification.create({
   subject: 'Notification With Payload',
   message: 'This is a notification that contains custom payload.',
-  payload: { number: 1, what: true, someAnswer: '42' }
+  payload: { number: 1, what: true, someAnswer: '42' },
+  channelId: "channel-id",
+  channelName: "Channel B",
+  channelDescription: "This is a description for channel B",
 });
 
 // Receive the payload on notification events
@@ -32,7 +35,10 @@ Notification.addListener('press', function(e) {
 Notification.create({
   subject: 'Notification With Custom Icon',
   message: 'This is a notification with a specified icon.',
-  smallIcon: 'ic_alert'
+  smallIcon: 'ic_alert',
+  channelId: "channel-id",
+  channelName: "Channel B",
+  channelDescription: "This is a description for channel B",
 });
 
 // Scheduled notifications
@@ -41,7 +47,10 @@ Notification.create({
   message: 'This notification will show on every Friday morning at 8:30 AM, starts at 2015/9/9 and end after 10 times.',
   sendAt: new Date(2015, 9, 9, 8, 30),
   repeatEvery: 'week',
-  count: 10
+  count: 10,
+  channelId: "channel-id",
+  channelName: "Channel B",
+  channelDescription: "This is a description for channel B",
 });
 ```
 
