@@ -1,5 +1,7 @@
 package com.imnirdst.iireactnativeandroidlocalnotification;
 
+import android.util.Log;
+
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableArray;
@@ -13,6 +15,10 @@ public class NotificationAttributes {
     public String message;
     public String action;
     public String payload;
+
+    public String channelId;
+    public String channelName;
+    public String channelDescription;
 
     public Boolean delayed;
     public Integer delay;
@@ -62,6 +68,7 @@ public class NotificationAttributes {
     public String group;
 
     public void loadFromReadableMap(ReadableMap readableMap) {
+        Log.d("imnimn Notification", readableMap.toString());
         if (readableMap.hasKey("id"))
             id = readableMap.getInt("id");
         if (readableMap.hasKey("subject"))
@@ -72,6 +79,13 @@ public class NotificationAttributes {
             action = readableMap.getString("action");
         if (readableMap.hasKey("payload"))
             payload = readableMap.getString("payload");
+
+        if (readableMap.hasKey("channelId"))
+            channelId = readableMap.getString("channelId");
+        if (readableMap.hasKey("channelName"))
+            channelName = readableMap.getString("channelName");
+        if (readableMap.hasKey("channelDescription"))
+            channelDescription = readableMap.getString("channelDescription");
 
         if (readableMap.hasKey("delayed"))
             delayed = readableMap.getBoolean("delayed");

@@ -1,5 +1,6 @@
 package com.imnirdst.iireactnativeandroidlocalnotification;
 
+import android.app.NotificationChannel;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -112,8 +113,10 @@ public class Notification {
      * Build the notification.
      */
     public android.app.Notification build() {
-        androidx.core.app.NotificationCompat.Builder notificationBuilder = new androidx.core.app.NotificationCompat.Builder(
-                context);
+        createNotificationChannel();
+
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(context, attributes.channelId);
 
         notificationBuilder.setContentTitle(attributes.subject).setContentText(attributes.message)
                 .setSmallIcon(
@@ -429,5 +432,21 @@ public class Notification {
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID, id);
 
         return PendingIntent.getBroadcast(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Log.d("imnimn Notification", attributes.toString());
+            CharSequence name = attributes.channelName;
+            String description = attributes.channelDescription;
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(attributes.channelId, name, importance);
+            channel.setDescription(description);
+
+            NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
+            if (notificationManager != null) {
+                notificationManager.createNotificationChannel(channel);
+            }
+        }
     }
 }

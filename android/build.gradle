@@ -14,7 +14,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath 'com.android.tools.build:gradle:3.5.3'
     }
 }
 
@@ -24,10 +24,9 @@ def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
-def DEFAULT_COMPILE_SDK_VERSION = 23
+def DEFAULT_COMPILE_SDK_VERSION = 29
 def DEFAULT_MIN_SDK_VERSION = 16
-def DEFAULT_SUPPORT_LIB_VERSION = '26.1.0'
-def DEFAULT_TARGET_SDK_VERSION = 23
+def DEFAULT_TARGET_SDK_VERSION = 29
 
 android {
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
@@ -48,7 +47,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'com.google.code.gson:gson:+'
-    implementation 'com.facebook.react:react-native:+'
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.facebook.react:react-native:0.20.1'
 }
