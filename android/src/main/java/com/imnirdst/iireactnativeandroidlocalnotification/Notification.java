@@ -299,7 +299,7 @@ public class Notification {
         PendingIntent pendingIntent = getScheduleNotificationIntent();
 
         long futureInMillis = SystemClock.elapsedRealtime() + attributes.delay;
-        getAlarmManager().set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        getAlarmManager().setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
 
         Log.i("ReactSystemNotification",
                 "Notification Delay Alarm Set: " + id + ", Repeat Type: " + attributes.repeatType + ", Current Time: "
@@ -313,7 +313,7 @@ public class Notification {
         PendingIntent pendingIntent = getScheduleNotificationIntent();
 
         if (attributes.repeatType == null) {
-            getAlarmManager().set(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
+            getAlarmManager().setExact(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
             Log.i("ReactSystemNotification", "Set One-Time Alarm: " + id);
 
         } else {
@@ -351,7 +351,7 @@ public class Notification {
                     break;
 
                 default:
-                    getAlarmManager().set(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
+                    getAlarmManager().setExact(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
                     Log.i("ReactSystemNotification", "Set One-Time Alarm: " + id);
                     break;
             }
