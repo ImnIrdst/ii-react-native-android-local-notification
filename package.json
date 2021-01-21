@@ -1,6 +1,6 @@
 {
   "name": "ii-react-native-android-local-notification",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Local-only notifications for React Native Android projects",
   "main": "index.js",
   "files": [
