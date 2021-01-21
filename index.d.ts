@@ -17,8 +17,9 @@ declare namespace Notification {
     repeatCount?: number
     endAt?: Date
     // Channels
-    channelID?: string
+    channelId?: string
     channelName?: string
+    channelDescription?: string
     // Customization
     priority?: number
     smallIcon?: string
@@ -64,5 +65,4 @@ interface Notification {
 declare const Notification: Notification
 
 export = Notification
-  
-  
+
