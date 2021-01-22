@@ -1,13 +1,12 @@
 {
   "name": "ii-react-native-android-local-notification",
-  "version": "4.3.1",
+  "version": "4.3.3",
   "description": "Local-only notifications for React Native Android projects",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "src",
   "files": [
     "android/src",
     "android/build.gradle",
-    "index.js"
+    "src"
   ],
   "repository": {
     "type": "git",
@@ -29,5 +28,14 @@
   "bugs": {
     "url": "https://github.com/imnirdst/ii-react-native-android-local-notification/issues"
   },
-  "homepage": "https://github.com/imnirdst/ii-react-native-android-local-notification#readme"
+  "homepage": "https://github.com/imnirdst/ii-react-native-android-local-notification#readme",
+  "dependencies": {
+    "global": "^4.4.0",
+    "react-native": "^0.63.4",
+    "tslib": "^2.1.0",
+    "typescript": "^4.1.3"
+  },
+  "devDependencies": {
+    "@types/react-native": "^0.63.46"
+  }
 }
