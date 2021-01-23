@@ -35,7 +35,7 @@ import android.graphics.Color;
  * Each instance is an representation of a single, or a set of scheduled
  * notifications. It handles operations like showing, canceling and clearing.
  */
-@SuppressWarnings({"UnusedReturnValue", "unused", "RedundantSuppression"})
+@SuppressWarnings({"unused"})
 public class Notification {
     private final Context context;
     private final int id;
@@ -299,7 +299,7 @@ public class Notification {
         PendingIntent pendingIntent = getScheduleNotificationIntent();
 
         long futureInMillis = SystemClock.elapsedRealtime() + attributes.delay;
-        getAlarmManager().setExact(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        getAlarmManager().set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
 
         Log.i("ReactSystemNotification",
                 "Notification Delay Alarm Set: " + id + ", Repeat Type: " + attributes.repeatType + ", Current Time: "
@@ -313,7 +313,7 @@ public class Notification {
         PendingIntent pendingIntent = getScheduleNotificationIntent();
 
         if (attributes.repeatType == null) {
-            getAlarmManager().setExact(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
+            getAlarmManager().set(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
             Log.i("ReactSystemNotification", "Set One-Time Alarm: " + id);
 
         } else {
@@ -351,7 +351,7 @@ public class Notification {
                     break;
 
                 default:
-                    getAlarmManager().setExact(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
+                    getAlarmManager().set(AlarmManager.RTC_WAKEUP, attributes.sendAt, pendingIntent);
                     Log.i("ReactSystemNotification", "Set One-Time Alarm: " + id);
                     break;
             }
